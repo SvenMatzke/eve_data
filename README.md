@@ -1,5 +1,5 @@
 # Purpose
-- Gather all eve data and give a convienient function to refreash your data
+- Gather all eve Online data and give a convienient function to refreash your data
 - all Data is static data generated with a base class as controll
 - Why you are asking? Simple static code analysis makes Testing a lot easier when new features are introduced to eve api.
 
