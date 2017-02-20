@@ -1,0 +1,21 @@
+
+
+
+{{ "class"|indent(0, true)}} {{ name }}(object):
+    base_url = "{{ base_url }}"
+
+    {%- if get is defined %}
+    {% include "esi_get_method.html" %}
+    {%- endif -%}
+
+    {%- if post is defined %}
+    {% include "esi_post_method.html" %}
+    {%- endif -%}
+
+    {%- if delete is defined %}
+    {% include "esi_delete_method.html" %}
+    {%- endif -%}
+
+    {%- if put is defined %}
+    {% include "esi_put_method.html" %}
+    {%- endif -%}

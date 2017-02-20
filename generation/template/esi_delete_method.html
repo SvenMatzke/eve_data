@@ -1,0 +1,25 @@
+    {%- set parameter = delete.get("parameters",[]) %}
+    delete_responses = {{ delete.get("responses",{}) }}
+
+    def delete(self,{{ " " }}
+    {%- for params in parameter  -%}
+        {%- if params.required is defined -%}
+            {{ params.get('name') | convertPythonParam + ", " }}
+        {%- else -%}
+            {{ params.get('name') | convertPythonParam }}="{{ params.get('default')}}",
+        {%- endif -%}
+    {%- endfor -%}
+    ):
+        """
+        {{ delete.get('description','') | indent(8, True) }}
+        {% for params in parameter %}
+        :type {{ params.get("name") | convertPythonParam }}: {{ params.get('type') | convertPythonType }}
+        :param {{ params.get("name") | convertPythonParam }}: {{ params.get('description') }}
+        {% endfor %}
+        """
+        return EsiRequestObject(self.base_url, self.delete_responses) \
+            .delete(**{
+                {%- for param in parameter | map(attribute='name')  -%}
+                    "{{ param }}":{{ param | convertPythonParam+", " }}
+                {%- endfor -%}
+                })

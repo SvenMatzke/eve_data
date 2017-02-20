@@ -1,0 +1,24 @@
+    {%- set parameter = post.get("parameters",[]) %}
+    post_responses = {{ post.get("responses",{})}}
+
+    def post(self,{{ " " }}
+    {%- for params in parameter -%}
+        {%- if params.required is defined -%}
+            {{ params.get('name') | convertPythonParam + ", " }}
+        {%- else -%}
+            {{ params.get('name') | convertPythonParam }}="{{ params.get('default')}}",
+        {%- endif -%}
+    {%- endfor -%}
+    ):
+        """
+        {{ post.get('description','') | indent(8, True) }}
+        {% for params in parameter %}
+        :type {{ params.get("name") | convertPythonParam }}: {{ params.get('type') | convertPythonType }}
+        :param {{ params.get("name") | convertPythonParam }}: {{ params.get('description') }}
+        {% endfor %}
+        """
+        return EsiRequestObject(self.base_url, self.post_responses) \
+            .post(**{
+                {%- for param in parameter | map(attribute='name')  -%}
+                    "{{ param }}":{{ param | convertPythonParam + ", " }}
+                {%- endfor -%}})
