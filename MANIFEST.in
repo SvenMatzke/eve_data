@@ -1,0 +1,3 @@
+include LICENSE
+include README.md
+recursive-include eve_data/generation/template *

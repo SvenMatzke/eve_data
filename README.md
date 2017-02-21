@@ -16,3 +16,23 @@ and have an easy to use api where only the data access of your account is the li
 # Comfort layer
 - Layer is designed to get a easy to use Access representing combination of EveData like esi and static_data
 
+# Steps
+- imports 
+- Settings 
+- migrate AuthUser
+
+if you have not already
+- createsuperuser 
+- login_to_admin menue and an application to Django OAuth Tool Kit
+
+now you can edit the settings for ...
+and use migrateEvedata afterwards if you need to update 
+the esiapi or static model, but be aware this package cant maintain future changes of eve upfront 
+but we try to keep the api as stable as possible. 
+And if something is realy bothering you make a pull request in git.
+
+
+
+# Helpful Links
+http://python-social-auth.readthedocs.io/en/latest/backends/eveonline.html
+http://python-social-auth.readthedocs.io/en/latest/configuration/django.html
