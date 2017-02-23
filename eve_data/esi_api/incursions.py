@@ -9,10 +9,9 @@ from .base import EsiRequestObject
 class Incursions(object):
     base_url = "https://esi.tech.ccp.is/latest/incursions/"
 
-    get_responses = {'200': {'headers': {'Cache-Control': {'type': 'string', 'description': 'The caching mechanism used'}, 'Expires': {'type': 'string', 'description': 'RFC7231 formatted datetime string'}, 'Last-Modified': {'type': 'string', 'description': 'RFC7231 formatted datetime string'}}, 'description': 'A list of incursions', 'examples': {'application/json': [{'has_boss': True, 'staging_solar_system_id': 30004154, 'influence': 1.0, 'infested_solar_systems': [30004148, 30004149, 30004150, 30004151, 30004152, 30004153, 30004154], 'constellation_id': 20000607, 'type': 'Incursion', 'state': 'mobilizing', 'faction_id': 500019}]}, 'schema': {'title': 'get_incursions_ok', 'type': 'array', 'description': '200 ok array', 'items': {'title': 'get_incursions_200_ok', 'type': 'object', 'description': '200 ok object', 'required': ['type', 'state', 'influence', 'has_boss', 'faction_id', 'constellation_id', 'staging_solar_system_id', 'infested_solar_systems'], 'properties': {'has_boss': {'type': 'boolean', 'description': 'Whether the final encounter has boss or not', 'title': 'get_incursions_has_boss'}, 'staging_solar_system_id': {'type': 'integer', 'format': 'int32', 'description': 'Staging solar system for this incursion', 'title': 'get_incursions_staging_solar_system_id'}, 'influence': {'type': 'number', 'format': 'float', 'description': 'Influence of this incursion as a float from 0 to 1', 'title': 'get_incursions_influence'}, 'infested_solar_systems': {'title': 'get_incursions_infested_solar_systems', 'type': 'array', 'description': 'A list of infested solar system ids that are a part of this incursion', 'items': {'type': 'integer', 'format': 'int32', 'description': 'infested_solar_system integer', 'title': 'get_incursions_infested_solar_system'}}, 'constellation_id': {'type': 'integer', 'format': 'int32', 'description': 'The constellation id in which this incursion takes place', 'title': 'get_incursions_constellation_id'}, 'type': {'type': 'string', 'description': 'The type of this incursion', 'title': 'get_incursions_type'}, 'state': {'title': 'get_incursions_state', 'type': 'string', 'description': 'The state of this incursion', 'enum': ['withdrawing', 'mobilizing', 'established']}, 'faction_id': {'type': 'integer', 'format': 'int32', 'description': "The attacking faction's id", 'title': 'get_incursions_faction_id'}}}}}, '500': {'description': 'Internal server error', 'examples': {'application/json': {'error': "uncaught exception: IOError('out of memory')"}}, 'schema': {'title': 'get_incursions_internal_server_error', 'type': 'object', 'description': 'Internal server error', 'properties': {'error': {'type': 'string', 'description': 'Internal server error message', 'title': 'get_incursions_500_internal_server_error'}}}}}
-    parameter = [{'name': 'datasource', 'default': 'tranquility', 'enum': ['tranquility', 'singularity'], 'type': 'string', 'in': 'query', 'description': 'The server name you would like data from'}, {'name': 'user_agent', 'type': 'string', 'in': 'query', 'description': 'Client identifier, takes precedence over headers'}, {'name': 'X-User-Agent', 'type': 'string', 'in': 'header', 'description': 'Client identifier, takes precedence over User-Agent'}]
-    def get(self, datasource= "tranquility",**kwargs
-    ):
+    get_responses = {'500': {'examples': {'application/json': {'error': "uncaught exception: IOError('out of memory')"}}, 'description': 'Internal server error', 'schema': {'description': 'Internal server error', 'title': 'get_incursions_internal_server_error', 'type': 'object', 'properties': {'error': {'description': 'Internal server error message', 'type': 'string', 'title': 'get_incursions_500_internal_server_error'}}}}, '200': {'examples': {'application/json': [{'faction_id': 500019, 'staging_solar_system_id': 30004154, 'has_boss': True, 'influence': 1.0, 'state': 'mobilizing', 'infested_solar_systems': [30004148, 30004149, 30004150, 30004151, 30004152, 30004153, 30004154], 'type': 'Incursion', 'constellation_id': 20000607}]}, 'description': 'A list of incursions', 'headers': {'Last-Modified': {'description': 'RFC7231 formatted datetime string', 'type': 'string'}, 'Cache-Control': {'description': 'The caching mechanism used', 'type': 'string'}, 'Expires': {'description': 'RFC7231 formatted datetime string', 'type': 'string'}}, 'schema': {'description': '200 ok array', 'items': {'required': ['type', 'state', 'influence', 'has_boss', 'faction_id', 'constellation_id', 'staging_solar_system_id', 'infested_solar_systems'], 'description': '200 ok object', 'title': 'get_incursions_200_ok', 'type': 'object', 'properties': {'faction_id': {'description': "The attacking faction's id", 'format': 'int32', 'type': 'integer', 'title': 'get_incursions_faction_id'}, 'staging_solar_system_id': {'description': 'Staging solar system for this incursion', 'format': 'int32', 'type': 'integer', 'title': 'get_incursions_staging_solar_system_id'}, 'has_boss': {'description': 'Whether the final encounter has boss or not', 'type': 'boolean', 'title': 'get_incursions_has_boss'}, 'influence': {'description': 'Influence of this incursion as a float from 0 to 1', 'format': 'float', 'type': 'number', 'title': 'get_incursions_influence'}, 'state': {'enum': ['withdrawing', 'mobilizing', 'established'], 'description': 'The state of this incursion', 'type': 'string', 'title': 'get_incursions_state'}, 'infested_solar_systems': {'description': 'A list of infested solar system ids that are a part of this incursion', 'items': {'description': 'infested_solar_system integer', 'format': 'int32', 'type': 'integer', 'title': 'get_incursions_infested_solar_system'}, 'type': 'array', 'title': 'get_incursions_infested_solar_systems'}, 'type': {'description': 'The type of this incursion', 'type': 'string', 'title': 'get_incursions_type'}, 'constellation_id': {'description': 'The constellation id in which this incursion takes place', 'format': 'int32', 'type': 'integer', 'title': 'get_incursions_constellation_id'}}}, 'type': 'array', 'title': 'get_incursions_ok'}}}
+
+    def get(self, datasource="tranquility",**kwargs):
         """
                 Return a list of current incursions
         
@@ -29,17 +28,14 @@ class Incursions(object):
         
         This route is cached for up to 300 seconds
 
-        :type datasource: str
+
+:type datasource: str
         :param datasource: The server name you would like data from
-
-        :type user_agent: str
-        :param user_agent: Client identifier, takes precedence over headers
-
-        :type x_user_agent: str
-        :param x_user_agent: Client identifier, takes precedence over User-Agent
-
-        """
-        kwargs_dict ={"datasource" : datasource, "user_agent" : user_agent, "X-User-Agent" : x_user_agent, }
+        :param kwargs: user_agent, X-User-Agent
+    """
+        kwargs_dict ={
+"datasource" : datasource, 
+        }
         kwargs_dict.update(kwargs)
         return EsiRequestObject(self.base_url, self.get_responses) \
             .get(**kwargs_dict)

@@ -9,10 +9,9 @@ from .base import EsiRequestObject
 class AlliancesDetailIcons(object):
     base_url = "https://esi.tech.ccp.is/latest/alliances/{alliance_id}/icons/"
 
-    get_responses = {'200': {'headers': {'Cache-Control': {'type': 'string', 'description': 'The caching mechanism used'}, 'Expires': {'type': 'string', 'description': 'RFC7231 formatted datetime string'}, 'Last-Modified': {'type': 'string', 'description': 'RFC7231 formatted datetime string'}}, 'description': 'Urls for icons for the given alliance id and server', 'examples': {'application/json': {'px64x64': 'https://imageserver.eveonline.com/Alliance/503818424_64.png', 'px128x128': 'https://imageserver.eveonline.com/Alliance/503818424_128.png'}}, 'schema': {'title': 'get_alliances_alliance_id_icons_ok', 'type': 'object', 'description': '200 ok object', 'properties': {'px64x64': {'type': 'string', 'description': 'px64x64 string', 'title': 'get_alliances_alliance_id_icons_px64x64'}, 'px128x128': {'type': 'string', 'description': 'px128x128 string', 'title': 'get_alliances_alliance_id_icons_px128x128'}}}}, '404': {'description': 'No image server for this datasource', 'examples': {'application/json': {'error': 'No image server for this datasource'}}, 'schema': {'title': 'get_alliances_alliance_id_icons_not_found', 'type': 'object', 'description': 'No image server for this datasource', 'properties': {'error': {'type': 'string', 'description': 'error message', 'title': 'get_alliances_alliance_id_icons_error'}}}}, '500': {'description': 'Internal server error', 'examples': {'application/json': {'error': "uncaught exception: IOError('out of memory')"}}, 'schema': {'title': 'get_alliances_alliance_id_icons_internal_server_error', 'type': 'object', 'description': 'Internal server error', 'properties': {'error': {'type': 'string', 'description': 'Internal server error message', 'title': 'get_alliances_alliance_id_icons_500_internal_server_error'}}}}}
-    parameter = [{'name': 'alliance_id', 'format': 'int32', 'description': 'An EVE alliance ID', 'type': 'integer', 'in': 'path', 'required': True}, {'name': 'datasource', 'default': 'tranquility', 'enum': ['tranquility', 'singularity'], 'type': 'string', 'in': 'query', 'description': 'The server name you would like data from'}, {'name': 'user_agent', 'type': 'string', 'in': 'query', 'description': 'Client identifier, takes precedence over headers'}, {'name': 'X-User-Agent', 'type': 'string', 'in': 'header', 'description': 'Client identifier, takes precedence over User-Agent'}]
-    def get(self, alliance_id, datasource= "tranquility",**kwargs
-    ):
+    get_responses = {'500': {'examples': {'application/json': {'error': "uncaught exception: IOError('out of memory')"}}, 'description': 'Internal server error', 'schema': {'description': 'Internal server error', 'title': 'get_alliances_alliance_id_icons_internal_server_error', 'type': 'object', 'properties': {'error': {'description': 'Internal server error message', 'type': 'string', 'title': 'get_alliances_alliance_id_icons_500_internal_server_error'}}}}, '404': {'examples': {'application/json': {'error': 'No image server for this datasource'}}, 'description': 'No image server for this datasource', 'schema': {'description': 'No image server for this datasource', 'title': 'get_alliances_alliance_id_icons_not_found', 'type': 'object', 'properties': {'error': {'description': 'error message', 'type': 'string', 'title': 'get_alliances_alliance_id_icons_error'}}}}, '200': {'examples': {'application/json': {'px64x64': 'https://imageserver.eveonline.com/Alliance/503818424_64.png', 'px128x128': 'https://imageserver.eveonline.com/Alliance/503818424_128.png'}}, 'description': 'Urls for icons for the given alliance id and server', 'headers': {'Last-Modified': {'description': 'RFC7231 formatted datetime string', 'type': 'string'}, 'Cache-Control': {'description': 'The caching mechanism used', 'type': 'string'}, 'Expires': {'description': 'RFC7231 formatted datetime string', 'type': 'string'}}, 'schema': {'description': '200 ok object', 'title': 'get_alliances_alliance_id_icons_ok', 'type': 'object', 'properties': {'px64x64': {'description': 'px64x64 string', 'type': 'string', 'title': 'get_alliances_alliance_id_icons_px64x64'}, 'px128x128': {'description': 'px128x128 string', 'type': 'string', 'title': 'get_alliances_alliance_id_icons_px128x128'}}}}}
+
+    def get(self, alliance_id, datasource="tranquility",**kwargs):
         """
                 Get the icon urls for a alliance
         
@@ -29,139 +28,15 @@ class AlliancesDetailIcons(object):
         
         This route is cached for up to 3600 seconds
 
-        :type alliance_id: int
+:type alliance_id: int
         :param alliance_id: An EVE alliance ID
-
-        :type datasource: str
+:type datasource: str
         :param datasource: The server name you would like data from
-
-        :type user_agent: str
-        :param user_agent: Client identifier, takes precedence over headers
-
-        :type x_user_agent: str
-        :param x_user_agent: Client identifier, takes precedence over User-Agent
-
-        """
-        kwargs_dict ={"alliance_id" : alliance_id, "datasource" : datasource, "user_agent" : user_agent, "X-User-Agent" : x_user_agent, }
-        kwargs_dict.update(kwargs)
-        return EsiRequestObject(self.base_url, self.get_responses) \
-            .get(**kwargs_dict)
-
-
-class Alliances(object):
-    base_url = "https://esi.tech.ccp.is/latest/alliances/"
-
-    get_responses = {'200': {'headers': {'Cache-Control': {'type': 'string', 'description': 'The caching mechanism used'}, 'Expires': {'type': 'string', 'description': 'RFC7231 formatted datetime string'}, 'Last-Modified': {'type': 'string', 'description': 'RFC7231 formatted datetime string'}}, 'description': 'List of Alliance IDs', 'examples': {'application/json': [99000001, 99000002]}, 'schema': {'title': 'get_alliances_ok', 'type': 'array', 'description': '200 ok array', 'items': {'uniqueItems': True, 'format': 'int32', 'description': '200 ok integer', 'type': 'integer', 'minimum': 0, 'title': 'get_alliances_200_ok'}}}, '500': {'description': 'Internal server error', 'examples': {'application/json': {'error': "uncaught exception: IOError('out of memory')"}}, 'schema': {'title': 'get_alliances_internal_server_error', 'type': 'object', 'description': 'Internal server error', 'properties': {'error': {'type': 'string', 'description': 'Internal server error message', 'title': 'get_alliances_500_internal_server_error'}}}}}
-    parameter = [{'name': 'datasource', 'default': 'tranquility', 'enum': ['tranquility', 'singularity'], 'type': 'string', 'in': 'query', 'description': 'The server name you would like data from'}, {'name': 'user_agent', 'type': 'string', 'in': 'query', 'description': 'Client identifier, takes precedence over headers'}, {'name': 'X-User-Agent', 'type': 'string', 'in': 'header', 'description': 'Client identifier, takes precedence over User-Agent'}]
-    def get(self, datasource= "tranquility",**kwargs
-    ):
-        """
-                List all active player alliances
-        
-        ---
-        
-        Alternate route: `/v1/alliances/`
-        
-        Alternate route: `/legacy/alliances/`
-        
-        Alternate route: `/dev/alliances/`
-        
-        
-        ---
-        
-        This route is cached for up to 3600 seconds
-
-        :type datasource: str
-        :param datasource: The server name you would like data from
-
-        :type user_agent: str
-        :param user_agent: Client identifier, takes precedence over headers
-
-        :type x_user_agent: str
-        :param x_user_agent: Client identifier, takes precedence over User-Agent
-
-        """
-        kwargs_dict ={"datasource" : datasource, "user_agent" : user_agent, "X-User-Agent" : x_user_agent, }
-        kwargs_dict.update(kwargs)
-        return EsiRequestObject(self.base_url, self.get_responses) \
-            .get(**kwargs_dict)
-
-
-class AlliancesNames(object):
-    base_url = "https://esi.tech.ccp.is/latest/alliances/names/"
-
-    get_responses = {'200': {'headers': {'Cache-Control': {'type': 'string', 'description': 'The caching mechanism used'}, 'Expires': {'type': 'string', 'description': 'RFC7231 formatted datetime string'}, 'Last-Modified': {'type': 'string', 'description': 'RFC7231 formatted datetime string'}}, 'description': 'List of id/name associations', 'examples': {'application/json': [{'alliance_name': 'Republic University', 'alliance_id': 1000171}]}, 'schema': {'title': 'get_alliances_names_ok', 'type': 'array', 'description': '200 ok array', 'items': {'title': 'get_alliances_names_200_ok', 'type': 'object', 'description': '200 ok object', 'required': ['alliance_id', 'alliance_name'], 'properties': {'alliance_name': {'type': 'string', 'description': 'alliance_name string', 'title': 'get_alliances_names_alliance_name'}, 'alliance_id': {'type': 'integer', 'format': 'int32', 'description': 'alliance_id integer', 'title': 'get_alliances_names_alliance_id'}}}}}, '500': {'description': 'Internal server error', 'examples': {'application/json': {'error': "uncaught exception: IOError('out of memory')"}}, 'schema': {'title': 'get_alliances_names_internal_server_error', 'type': 'object', 'description': 'Internal server error', 'properties': {'error': {'type': 'string', 'description': 'Internal server error message', 'title': 'get_alliances_names_500_internal_server_error'}}}}}
-    parameter = [{'name': 'alliance_ids', 'description': 'A comma separated list of alliance IDs', 'minItems': 1, 'type': 'array', 'in': 'query', 'required': True, 'items': {'type': 'integer', 'format': 'int64'}}, {'name': 'datasource', 'default': 'tranquility', 'enum': ['tranquility', 'singularity'], 'type': 'string', 'in': 'query', 'description': 'The server name you would like data from'}, {'name': 'user_agent', 'type': 'string', 'in': 'query', 'description': 'Client identifier, takes precedence over headers'}, {'name': 'X-User-Agent', 'type': 'string', 'in': 'header', 'description': 'Client identifier, takes precedence over User-Agent'}]
-    def get(self, alliance_ids, datasource= "tranquility",**kwargs
-    ):
-        """
-                Resolve a set of alliance IDs to alliance names
-        
-        ---
-        
-        Alternate route: `/v1/alliances/names/`
-        
-        Alternate route: `/legacy/alliances/names/`
-        
-        Alternate route: `/dev/alliances/names/`
-        
-        
-        ---
-        
-        This route is cached for up to 3600 seconds
-
-        :type alliance_ids: list
-        :param alliance_ids: A comma separated list of alliance IDs
-
-        :type datasource: str
-        :param datasource: The server name you would like data from
-
-        :type user_agent: str
-        :param user_agent: Client identifier, takes precedence over headers
-
-        :type x_user_agent: str
-        :param x_user_agent: Client identifier, takes precedence over User-Agent
-
-        """
-        kwargs_dict ={"alliance_ids" : alliance_ids, "datasource" : datasource, "user_agent" : user_agent, "X-User-Agent" : x_user_agent, }
-        kwargs_dict.update(kwargs)
-        return EsiRequestObject(self.base_url, self.get_responses) \
-            .get(**kwargs_dict)
-
-
-class AlliancesDetail(object):
-    base_url = "https://esi.tech.ccp.is/latest/alliances/{alliance_id}/"
-
-    get_responses = {'200': {'headers': {'Cache-Control': {'type': 'string', 'description': 'The caching mechanism used'}, 'Expires': {'type': 'string', 'description': 'RFC7231 formatted datetime string'}, 'Last-Modified': {'type': 'string', 'description': 'RFC7231 formatted datetime string'}}, 'description': 'Public data about an alliance', 'examples': {'application/json': {'date_founded': '2016-06-26T21:00:00Z', 'executor_corp': 98356193, 'alliance_name': 'C C P Alliance', 'ticker': '<C C P>'}}, 'schema': {'title': 'get_alliances_alliance_id_ok', 'type': 'object', 'description': '200 ok object', 'required': ['alliance_name', 'ticker', 'date_founded'], 'properties': {'date_founded': {'type': 'string', 'format': 'date-time', 'description': 'date_founded string', 'title': 'get_alliances_alliance_id_date_founded'}, 'executor_corp': {'type': 'integer', 'format': 'int32', 'description': 'the executor corporation ID, if this alliance is not closed', 'title': 'get_alliances_alliance_id_executor_corp'}, 'alliance_name': {'type': 'string', 'description': 'the full name of the alliance', 'title': 'get_alliances_alliance_id_alliance_name'}, 'ticker': {'type': 'string', 'description': 'the short name of the alliance', 'title': 'get_alliances_alliance_id_ticker'}}}}, '404': {'description': 'Alliance not found', 'examples': {'application/json': {'error': 'Alliance not found'}}, 'schema': {'title': 'get_alliances_alliance_id_not_found', 'type': 'object', 'description': 'Alliance not found', 'properties': {'error': {'type': 'string', 'description': 'error message', 'title': 'get_alliances_alliance_id_error'}}}}, '500': {'description': 'Internal server error', 'examples': {'application/json': {'error': "uncaught exception: IOError('out of memory')"}}, 'schema': {'title': 'get_alliances_alliance_id_internal_server_error', 'type': 'object', 'description': 'Internal server error', 'properties': {'error': {'type': 'string', 'description': 'Internal server error message', 'title': 'get_alliances_alliance_id_500_internal_server_error'}}}}}
-    parameter = [{'name': 'alliance_id', 'format': 'int32', 'description': 'An Eve alliance ID', 'type': 'integer', 'in': 'path', 'required': True}, {'name': 'datasource', 'default': 'tranquility', 'enum': ['tranquility', 'singularity'], 'type': 'string', 'in': 'query', 'description': 'The server name you would like data from'}, {'name': 'user_agent', 'type': 'string', 'in': 'query', 'description': 'Client identifier, takes precedence over headers'}, {'name': 'X-User-Agent', 'type': 'string', 'in': 'header', 'description': 'Client identifier, takes precedence over User-Agent'}]
-    def get(self, alliance_id, datasource= "tranquility",**kwargs
-    ):
-        """
-                Public information about an alliance
-        
-        ---
-        
-        Alternate route: `/v2/alliances/{alliance_id}/`
-        
-        
-        ---
-        
-        This route is cached for up to 3600 seconds
-
-        :type alliance_id: int
-        :param alliance_id: An Eve alliance ID
-
-        :type datasource: str
-        :param datasource: The server name you would like data from
-
-        :type user_agent: str
-        :param user_agent: Client identifier, takes precedence over headers
-
-        :type x_user_agent: str
-        :param x_user_agent: Client identifier, takes precedence over User-Agent
-
-        """
-        kwargs_dict ={"alliance_id" : alliance_id, "datasource" : datasource, "user_agent" : user_agent, "X-User-Agent" : x_user_agent, }
+        :param kwargs: user_agent, X-User-Agent
+    """
+        kwargs_dict ={
+"alliance_id" : alliance_id, "datasource" : datasource, 
+        }
         kwargs_dict.update(kwargs)
         return EsiRequestObject(self.base_url, self.get_responses) \
             .get(**kwargs_dict)
@@ -170,10 +45,9 @@ class AlliancesDetail(object):
 class AlliancesDetailCorporations(object):
     base_url = "https://esi.tech.ccp.is/latest/alliances/{alliance_id}/corporations/"
 
-    get_responses = {'200': {'headers': {'Cache-Control': {'type': 'string', 'description': 'The caching mechanism used'}, 'Expires': {'type': 'string', 'description': 'RFC7231 formatted datetime string'}, 'Last-Modified': {'type': 'string', 'description': 'RFC7231 formatted datetime string'}}, 'description': 'List of corporation IDs', 'examples': {'application/json': [98000001]}, 'schema': {'title': 'get_alliances_alliance_id_corporations_ok', 'type': 'array', 'description': '200 ok array', 'items': {'uniqueItems': True, 'format': 'int32', 'description': '200 ok integer', 'type': 'integer', 'minimum': 0, 'title': 'get_alliances_alliance_id_corporations_200_ok'}}}, '500': {'description': 'Internal server error', 'examples': {'application/json': {'error': "uncaught exception: IOError('out of memory')"}}, 'schema': {'title': 'get_alliances_alliance_id_corporations_internal_server_error', 'type': 'object', 'description': 'Internal server error', 'properties': {'error': {'type': 'string', 'description': 'Internal server error message', 'title': 'get_alliances_alliance_id_corporations_500_internal_server_error'}}}}}
-    parameter = [{'name': 'alliance_id', 'format': 'int32', 'description': 'An EVE alliance ID', 'type': 'integer', 'in': 'path', 'required': True}, {'name': 'datasource', 'default': 'tranquility', 'enum': ['tranquility', 'singularity'], 'type': 'string', 'in': 'query', 'description': 'The server name you would like data from'}, {'name': 'user_agent', 'type': 'string', 'in': 'query', 'description': 'Client identifier, takes precedence over headers'}, {'name': 'X-User-Agent', 'type': 'string', 'in': 'header', 'description': 'Client identifier, takes precedence over User-Agent'}]
-    def get(self, alliance_id, datasource= "tranquility",**kwargs
-    ):
+    get_responses = {'500': {'examples': {'application/json': {'error': "uncaught exception: IOError('out of memory')"}}, 'description': 'Internal server error', 'schema': {'description': 'Internal server error', 'title': 'get_alliances_alliance_id_corporations_internal_server_error', 'type': 'object', 'properties': {'error': {'description': 'Internal server error message', 'type': 'string', 'title': 'get_alliances_alliance_id_corporations_500_internal_server_error'}}}}, '200': {'examples': {'application/json': [98000001]}, 'description': 'List of corporation IDs', 'headers': {'Last-Modified': {'description': 'RFC7231 formatted datetime string', 'type': 'string'}, 'Cache-Control': {'description': 'The caching mechanism used', 'type': 'string'}, 'Expires': {'description': 'RFC7231 formatted datetime string', 'type': 'string'}}, 'schema': {'description': '200 ok array', 'items': {'description': '200 ok integer', 'uniqueItems': True, 'type': 'integer', 'format': 'int32', 'minimum': 0, 'title': 'get_alliances_alliance_id_corporations_200_ok'}, 'type': 'array', 'title': 'get_alliances_alliance_id_corporations_ok'}}}
+
+    def get(self, alliance_id, datasource="tranquility",**kwargs):
         """
                 List all current member corporations of an alliance
         
@@ -190,20 +64,118 @@ class AlliancesDetailCorporations(object):
         
         This route is cached for up to 3600 seconds
 
-        :type alliance_id: int
+:type alliance_id: int
         :param alliance_id: An EVE alliance ID
-
-        :type datasource: str
+:type datasource: str
         :param datasource: The server name you would like data from
+        :param kwargs: user_agent, X-User-Agent
+    """
+        kwargs_dict ={
+"alliance_id" : alliance_id, "datasource" : datasource, 
+        }
+        kwargs_dict.update(kwargs)
+        return EsiRequestObject(self.base_url, self.get_responses) \
+            .get(**kwargs_dict)
 
-        :type user_agent: str
-        :param user_agent: Client identifier, takes precedence over headers
 
-        :type x_user_agent: str
-        :param x_user_agent: Client identifier, takes precedence over User-Agent
+class AlliancesDetail(object):
+    base_url = "https://esi.tech.ccp.is/latest/alliances/{alliance_id}/"
 
+    get_responses = {'500': {'examples': {'application/json': {'error': "uncaught exception: IOError('out of memory')"}}, 'description': 'Internal server error', 'schema': {'description': 'Internal server error', 'title': 'get_alliances_alliance_id_internal_server_error', 'type': 'object', 'properties': {'error': {'description': 'Internal server error message', 'type': 'string', 'title': 'get_alliances_alliance_id_500_internal_server_error'}}}}, '404': {'examples': {'application/json': {'error': 'Alliance not found'}}, 'description': 'Alliance not found', 'schema': {'description': 'Alliance not found', 'title': 'get_alliances_alliance_id_not_found', 'type': 'object', 'properties': {'error': {'description': 'error message', 'type': 'string', 'title': 'get_alliances_alliance_id_error'}}}}, '200': {'examples': {'application/json': {'date_founded': '2016-06-26T21:00:00Z', 'ticker': '<C C P>', 'alliance_name': 'C C P Alliance', 'executor_corp': 98356193}}, 'description': 'Public data about an alliance', 'headers': {'Last-Modified': {'description': 'RFC7231 formatted datetime string', 'type': 'string'}, 'Cache-Control': {'description': 'The caching mechanism used', 'type': 'string'}, 'Expires': {'description': 'RFC7231 formatted datetime string', 'type': 'string'}}, 'schema': {'required': ['alliance_name', 'ticker', 'date_founded'], 'description': '200 ok object', 'title': 'get_alliances_alliance_id_ok', 'type': 'object', 'properties': {'date_founded': {'description': 'date_founded string', 'format': 'date-time', 'type': 'string', 'title': 'get_alliances_alliance_id_date_founded'}, 'ticker': {'description': 'the short name of the alliance', 'type': 'string', 'title': 'get_alliances_alliance_id_ticker'}, 'alliance_name': {'description': 'the full name of the alliance', 'type': 'string', 'title': 'get_alliances_alliance_id_alliance_name'}, 'executor_corp': {'description': 'the executor corporation ID, if this alliance is not closed', 'format': 'int32', 'type': 'integer', 'title': 'get_alliances_alliance_id_executor_corp'}}}}}
+
+    def get(self, alliance_id, datasource="tranquility",**kwargs):
         """
-        kwargs_dict ={"alliance_id" : alliance_id, "datasource" : datasource, "user_agent" : user_agent, "X-User-Agent" : x_user_agent, }
+                Public information about an alliance
+        
+        ---
+        
+        Alternate route: `/v2/alliances/{alliance_id}/`
+        
+        
+        ---
+        
+        This route is cached for up to 3600 seconds
+
+:type alliance_id: int
+        :param alliance_id: An Eve alliance ID
+:type datasource: str
+        :param datasource: The server name you would like data from
+        :param kwargs: user_agent, X-User-Agent
+    """
+        kwargs_dict ={
+"alliance_id" : alliance_id, "datasource" : datasource, 
+        }
+        kwargs_dict.update(kwargs)
+        return EsiRequestObject(self.base_url, self.get_responses) \
+            .get(**kwargs_dict)
+
+
+class AlliancesNames(object):
+    base_url = "https://esi.tech.ccp.is/latest/alliances/names/"
+
+    get_responses = {'500': {'examples': {'application/json': {'error': "uncaught exception: IOError('out of memory')"}}, 'description': 'Internal server error', 'schema': {'description': 'Internal server error', 'title': 'get_alliances_names_internal_server_error', 'type': 'object', 'properties': {'error': {'description': 'Internal server error message', 'type': 'string', 'title': 'get_alliances_names_500_internal_server_error'}}}}, '200': {'examples': {'application/json': [{'alliance_name': 'Republic University', 'alliance_id': 1000171}]}, 'description': 'List of id/name associations', 'headers': {'Last-Modified': {'description': 'RFC7231 formatted datetime string', 'type': 'string'}, 'Cache-Control': {'description': 'The caching mechanism used', 'type': 'string'}, 'Expires': {'description': 'RFC7231 formatted datetime string', 'type': 'string'}}, 'schema': {'description': '200 ok array', 'items': {'required': ['alliance_id', 'alliance_name'], 'description': '200 ok object', 'title': 'get_alliances_names_200_ok', 'type': 'object', 'properties': {'alliance_name': {'description': 'alliance_name string', 'type': 'string', 'title': 'get_alliances_names_alliance_name'}, 'alliance_id': {'description': 'alliance_id integer', 'format': 'int32', 'type': 'integer', 'title': 'get_alliances_names_alliance_id'}}}, 'type': 'array', 'title': 'get_alliances_names_ok'}}}
+
+    def get(self, alliance_ids, datasource="tranquility",**kwargs):
+        """
+                Resolve a set of alliance IDs to alliance names
+        
+        ---
+        
+        Alternate route: `/v1/alliances/names/`
+        
+        Alternate route: `/legacy/alliances/names/`
+        
+        Alternate route: `/dev/alliances/names/`
+        
+        
+        ---
+        
+        This route is cached for up to 3600 seconds
+
+:type alliance_ids: list
+        :param alliance_ids: A comma separated list of alliance IDs
+:type datasource: str
+        :param datasource: The server name you would like data from
+        :param kwargs: user_agent, X-User-Agent
+    """
+        kwargs_dict ={
+"alliance_ids" : alliance_ids, "datasource" : datasource, 
+        }
+        kwargs_dict.update(kwargs)
+        return EsiRequestObject(self.base_url, self.get_responses) \
+            .get(**kwargs_dict)
+
+
+class Alliances(object):
+    base_url = "https://esi.tech.ccp.is/latest/alliances/"
+
+    get_responses = {'500': {'examples': {'application/json': {'error': "uncaught exception: IOError('out of memory')"}}, 'description': 'Internal server error', 'schema': {'description': 'Internal server error', 'title': 'get_alliances_internal_server_error', 'type': 'object', 'properties': {'error': {'description': 'Internal server error message', 'type': 'string', 'title': 'get_alliances_500_internal_server_error'}}}}, '200': {'examples': {'application/json': [99000001, 99000002]}, 'description': 'List of Alliance IDs', 'headers': {'Last-Modified': {'description': 'RFC7231 formatted datetime string', 'type': 'string'}, 'Cache-Control': {'description': 'The caching mechanism used', 'type': 'string'}, 'Expires': {'description': 'RFC7231 formatted datetime string', 'type': 'string'}}, 'schema': {'description': '200 ok array', 'items': {'description': '200 ok integer', 'uniqueItems': True, 'type': 'integer', 'format': 'int32', 'minimum': 0, 'title': 'get_alliances_200_ok'}, 'type': 'array', 'title': 'get_alliances_ok'}}}
+
+    def get(self, datasource="tranquility",**kwargs):
+        """
+                List all active player alliances
+        
+        ---
+        
+        Alternate route: `/v1/alliances/`
+        
+        Alternate route: `/legacy/alliances/`
+        
+        Alternate route: `/dev/alliances/`
+        
+        
+        ---
+        
+        This route is cached for up to 3600 seconds
+
+
+:type datasource: str
+        :param datasource: The server name you would like data from
+        :param kwargs: user_agent, X-User-Agent
+    """
+        kwargs_dict ={
+"datasource" : datasource, 
+        }
         kwargs_dict.update(kwargs)
         return EsiRequestObject(self.base_url, self.get_responses) \
             .get(**kwargs_dict)

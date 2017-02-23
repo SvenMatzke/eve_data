@@ -9,10 +9,9 @@ from .base import EsiRequestObject
 class MarketsStructuresDetail(object):
     base_url = "https://esi.tech.ccp.is/latest/markets/structures/{structure_id}/"
 
-    get_responses = {'200': {'headers': {'Cache-Control': {'type': 'string', 'description': 'The caching mechanism used'}, 'Expires': {'type': 'string', 'description': 'RFC7231 formatted datetime string'}, 'Last-Modified': {'type': 'string', 'description': 'RFC7231 formatted datetime string'}}, 'description': 'A list of orders', 'examples': {'application/json': [{'volume_remain': 1296000, 'issued': '2016-09-03T05:12:25Z', 'min_volume': 1, 'price': 9.9, 'duration': 90, 'range': 'region', 'type_id': 34, 'location_id': 60005599, 'volume_total': 2000000, 'order_id': 4623824223, 'is_buy_order': False}]}, 'schema': {'title': 'get_markets_structures_structure_id_ok', 'type': 'array', 'description': '200 ok array', 'items': {'title': 'get_markets_structures_structure_id_200_ok', 'type': 'object', 'description': '200 ok object', 'required': ['order_id', 'type_id', 'location_id', 'volume_total', 'volume_remain', 'min_volume', 'price', 'is_buy_order', 'duration', 'issued', 'range'], 'properties': {'volume_remain': {'type': 'integer', 'format': 'int32', 'description': 'volume_remain integer', 'title': 'get_markets_structures_structure_id_volume_remain'}, 'issued': {'type': 'string', 'format': 'date-time', 'description': 'issued string', 'title': 'get_markets_structures_structure_id_issued'}, 'min_volume': {'type': 'integer', 'format': 'int32', 'description': 'min_volume integer', 'title': 'get_markets_structures_structure_id_min_volume'}, 'price': {'type': 'number', 'format': 'float', 'description': 'price number', 'title': 'get_markets_structures_structure_id_price'}, 'duration': {'type': 'integer', 'format': 'int32', 'description': 'duration integer', 'title': 'get_markets_structures_structure_id_duration'}, 'range': {'title': 'get_markets_structures_structure_id_range', 'type': 'string', 'description': 'range string', 'enum': ['station', 'region', 'solarsystem', '1', '2', '3', '4', '5', '10', '20', '30', '40']}, 'type_id': {'type': 'integer', 'format': 'int32', 'description': 'type_id integer', 'title': 'get_markets_structures_structure_id_type_id'}, 'location_id': {'type': 'integer', 'format': 'int64', 'description': 'location_id integer', 'title': 'get_markets_structures_structure_id_location_id'}, 'volume_total': {'type': 'integer', 'format': 'int32', 'description': 'volume_total integer', 'title': 'get_markets_structures_structure_id_volume_total'}, 'order_id': {'type': 'integer', 'format': 'int64', 'description': 'order_id integer', 'title': 'get_markets_structures_structure_id_order_id'}, 'is_buy_order': {'type': 'boolean', 'description': 'is_buy_order boolean', 'title': 'get_markets_structures_structure_id_is_buy_order'}}}}}, '500': {'description': 'Internal server error', 'examples': {'application/json': {'error': "uncaught exception: IOError('out of memory')"}}, 'schema': {'title': 'get_markets_structures_structure_id_internal_server_error', 'type': 'object', 'description': 'Internal server error', 'properties': {'error': {'type': 'string', 'description': 'Internal server error message', 'title': 'get_markets_structures_structure_id_500_internal_server_error'}}}}, '403': {'description': 'Forbidden', 'examples': {'application/json': {'error': 'Token is not valid for scope(s): esi-markets.structure_markets.v1'}}, 'schema': {'title': 'get_markets_structures_structure_id_forbidden', 'type': 'object', 'description': 'Forbidden', 'properties': {'error': {'type': 'string', 'description': 'Forbidden message', 'title': 'get_markets_structures_structure_id_403_forbidden'}}}}}
-    parameter = [{'name': 'datasource', 'default': 'tranquility', 'enum': ['tranquility', 'singularity'], 'type': 'string', 'in': 'query', 'description': 'The server name you would like data from'}, {'name': 'page', 'format': 'int32', 'default': 1, 'type': 'integer', 'in': 'query', 'required': False, 'description': 'Which page to query, starting at 1'}, {'name': 'structure_id', 'format': 'int64', 'description': 'Return orders in this structure', 'type': 'integer', 'in': 'path', 'required': True}, {'name': 'token', 'type': 'string', 'in': 'query', 'description': 'Access token to use, if preferred over a header'}, {'name': 'user_agent', 'type': 'string', 'in': 'query', 'description': 'Client identifier, takes precedence over headers'}, {'name': 'X-User-Agent', 'type': 'string', 'in': 'header', 'description': 'Client identifier, takes precedence over User-Agent'}]
-    def get(self, datasource= "tranquility",page= ,structure_id, **kwargs
-    ):
+    get_responses = {'403': {'examples': {'application/json': {'error': 'Token is not valid for scope(s): esi-markets.structure_markets.v1'}}, 'description': 'Forbidden', 'schema': {'description': 'Forbidden', 'title': 'get_markets_structures_structure_id_forbidden', 'type': 'object', 'properties': {'error': {'description': 'Forbidden message', 'type': 'string', 'title': 'get_markets_structures_structure_id_403_forbidden'}}}}, '200': {'examples': {'application/json': [{'duration': 90, 'min_volume': 1, 'price': 9.9, 'type_id': 34, 'volume_remain': 1296000, 'order_id': 4623824223, 'volume_total': 2000000, 'range': 'region', 'location_id': 60005599, 'issued': '2016-09-03T05:12:25Z', 'is_buy_order': False}]}, 'description': 'A list of orders', 'headers': {'Last-Modified': {'description': 'RFC7231 formatted datetime string', 'type': 'string'}, 'Cache-Control': {'description': 'The caching mechanism used', 'type': 'string'}, 'Expires': {'description': 'RFC7231 formatted datetime string', 'type': 'string'}}, 'schema': {'description': '200 ok array', 'items': {'required': ['order_id', 'type_id', 'location_id', 'volume_total', 'volume_remain', 'min_volume', 'price', 'is_buy_order', 'duration', 'issued', 'range'], 'description': '200 ok object', 'title': 'get_markets_structures_structure_id_200_ok', 'type': 'object', 'properties': {'duration': {'description': 'duration integer', 'format': 'int32', 'type': 'integer', 'title': 'get_markets_structures_structure_id_duration'}, 'min_volume': {'description': 'min_volume integer', 'format': 'int32', 'type': 'integer', 'title': 'get_markets_structures_structure_id_min_volume'}, 'price': {'description': 'price number', 'format': 'float', 'type': 'number', 'title': 'get_markets_structures_structure_id_price'}, 'type_id': {'description': 'type_id integer', 'format': 'int32', 'type': 'integer', 'title': 'get_markets_structures_structure_id_type_id'}, 'volume_remain': {'description': 'volume_remain integer', 'format': 'int32', 'type': 'integer', 'title': 'get_markets_structures_structure_id_volume_remain'}, 'order_id': {'description': 'order_id integer', 'format': 'int64', 'type': 'integer', 'title': 'get_markets_structures_structure_id_order_id'}, 'volume_total': {'description': 'volume_total integer', 'format': 'int32', 'type': 'integer', 'title': 'get_markets_structures_structure_id_volume_total'}, 'range': {'enum': ['station', 'region', 'solarsystem', '1', '2', '3', '4', '5', '10', '20', '30', '40'], 'description': 'range string', 'type': 'string', 'title': 'get_markets_structures_structure_id_range'}, 'location_id': {'description': 'location_id integer', 'format': 'int64', 'type': 'integer', 'title': 'get_markets_structures_structure_id_location_id'}, 'issued': {'description': 'issued string', 'format': 'date-time', 'type': 'string', 'title': 'get_markets_structures_structure_id_issued'}, 'is_buy_order': {'description': 'is_buy_order boolean', 'type': 'boolean', 'title': 'get_markets_structures_structure_id_is_buy_order'}}}, 'type': 'array', 'title': 'get_markets_structures_structure_id_ok'}}, '500': {'examples': {'application/json': {'error': "uncaught exception: IOError('out of memory')"}}, 'description': 'Internal server error', 'schema': {'description': 'Internal server error', 'title': 'get_markets_structures_structure_id_internal_server_error', 'type': 'object', 'properties': {'error': {'description': 'Internal server error message', 'type': 'string', 'title': 'get_markets_structures_structure_id_500_internal_server_error'}}}}}
+
+    def get(self, structure_id, datasource="tranquility",page="1",**kwargs):
         """
                 Return all orders in a structure
         
@@ -29,26 +28,16 @@ class MarketsStructuresDetail(object):
         
         This route is cached for up to 300 seconds
 
-        :type datasource: str
-        :param datasource: The server name you would like data from
-
-        :type page: int
-        :param page: Which page to query, starting at 1
-
-        :type structure_id: int
+:type structure_id: int
         :param structure_id: Return orders in this structure
-
-        :type token: str
-        :param token: Access token to use, if preferred over a header
-
-        :type user_agent: str
-        :param user_agent: Client identifier, takes precedence over headers
-
-        :type x_user_agent: str
-        :param x_user_agent: Client identifier, takes precedence over User-Agent
-
-        """
-        kwargs_dict ={"datasource" : datasource, "page" : page, "structure_id" : structure_id, "token" : token, "user_agent" : user_agent, "X-User-Agent" : x_user_agent, }
+:type datasource: str
+        :param datasource: The server name you would like data from:type page: int
+        :param page: Which page to query, starting at 1
+        :param kwargs: token, user_agent, X-User-Agent
+    """
+        kwargs_dict ={
+"structure_id" : structure_id, "datasource" : datasource, "page" : page, 
+        }
         kwargs_dict.update(kwargs)
         return EsiRequestObject(self.base_url, self.get_responses) \
             .get(**kwargs_dict)
@@ -57,10 +46,9 @@ class MarketsStructuresDetail(object):
 class MarketsPrices(object):
     base_url = "https://esi.tech.ccp.is/latest/markets/prices/"
 
-    get_responses = {'200': {'headers': {'Cache-Control': {'type': 'string', 'description': 'The caching mechanism used'}, 'Expires': {'type': 'string', 'description': 'RFC7231 formatted datetime string'}, 'Last-Modified': {'type': 'string', 'description': 'RFC7231 formatted datetime string'}}, 'description': 'A list of prices', 'examples': {'application/json': [{'average_price': 306292.67, 'type_id': 32772, 'adjusted_price': 306988.09}]}, 'schema': {'title': 'get_markets_prices_ok', 'type': 'array', 'description': '200 ok array', 'items': {'title': 'get_markets_prices_200_ok', 'type': 'object', 'description': '200 ok object', 'required': ['type_id'], 'properties': {'average_price': {'type': 'number', 'format': 'float', 'description': 'average_price number', 'title': 'get_markets_prices_average_price'}, 'type_id': {'type': 'integer', 'format': 'int32', 'description': 'type_id integer', 'title': 'get_markets_prices_type_id'}, 'adjusted_price': {'type': 'number', 'format': 'float', 'description': 'adjusted_price number', 'title': 'get_markets_prices_adjusted_price'}}}}}, '500': {'description': 'Internal server error', 'examples': {'application/json': {'error': "uncaught exception: IOError('out of memory')"}}, 'schema': {'title': 'get_markets_prices_internal_server_error', 'type': 'object', 'description': 'Internal server error', 'properties': {'error': {'type': 'string', 'description': 'Internal server error message', 'title': 'get_markets_prices_500_internal_server_error'}}}}}
-    parameter = [{'name': 'datasource', 'default': 'tranquility', 'enum': ['tranquility', 'singularity'], 'type': 'string', 'in': 'query', 'description': 'The server name you would like data from'}, {'name': 'user_agent', 'type': 'string', 'in': 'query', 'description': 'Client identifier, takes precedence over headers'}, {'name': 'X-User-Agent', 'type': 'string', 'in': 'header', 'description': 'Client identifier, takes precedence over User-Agent'}]
-    def get(self, datasource= "tranquility",**kwargs
-    ):
+    get_responses = {'500': {'examples': {'application/json': {'error': "uncaught exception: IOError('out of memory')"}}, 'description': 'Internal server error', 'schema': {'description': 'Internal server error', 'title': 'get_markets_prices_internal_server_error', 'type': 'object', 'properties': {'error': {'description': 'Internal server error message', 'type': 'string', 'title': 'get_markets_prices_500_internal_server_error'}}}}, '200': {'examples': {'application/json': [{'adjusted_price': 306988.09, 'average_price': 306292.67, 'type_id': 32772}]}, 'description': 'A list of prices', 'headers': {'Last-Modified': {'description': 'RFC7231 formatted datetime string', 'type': 'string'}, 'Cache-Control': {'description': 'The caching mechanism used', 'type': 'string'}, 'Expires': {'description': 'RFC7231 formatted datetime string', 'type': 'string'}}, 'schema': {'description': '200 ok array', 'items': {'required': ['type_id'], 'description': '200 ok object', 'title': 'get_markets_prices_200_ok', 'type': 'object', 'properties': {'adjusted_price': {'description': 'adjusted_price number', 'format': 'float', 'type': 'number', 'title': 'get_markets_prices_adjusted_price'}, 'average_price': {'description': 'average_price number', 'format': 'float', 'type': 'number', 'title': 'get_markets_prices_average_price'}, 'type_id': {'description': 'type_id integer', 'format': 'int32', 'type': 'integer', 'title': 'get_markets_prices_type_id'}}}, 'type': 'array', 'title': 'get_markets_prices_ok'}}}
+
+    def get(self, datasource="tranquility",**kwargs):
         """
                 Return a list of prices
         
@@ -77,70 +65,14 @@ class MarketsPrices(object):
         
         This route is cached for up to 3600 seconds
 
-        :type datasource: str
+
+:type datasource: str
         :param datasource: The server name you would like data from
-
-        :type user_agent: str
-        :param user_agent: Client identifier, takes precedence over headers
-
-        :type x_user_agent: str
-        :param x_user_agent: Client identifier, takes precedence over User-Agent
-
-        """
-        kwargs_dict ={"datasource" : datasource, "user_agent" : user_agent, "X-User-Agent" : x_user_agent, }
-        kwargs_dict.update(kwargs)
-        return EsiRequestObject(self.base_url, self.get_responses) \
-            .get(**kwargs_dict)
-
-
-class MarketsDetailOrders(object):
-    base_url = "https://esi.tech.ccp.is/latest/markets/{region_id}/orders/"
-
-    get_responses = {'200': {'headers': {'Cache-Control': {'type': 'string', 'description': 'The caching mechanism used'}, 'Expires': {'type': 'string', 'description': 'RFC7231 formatted datetime string'}, 'Last-Modified': {'type': 'string', 'description': 'RFC7231 formatted datetime string'}}, 'description': 'A list of orders', 'examples': {'application/json': [{'volume_remain': 1296000, 'issued': '2016-09-03T05:12:25Z', 'min_volume': 1, 'price': 9.9, 'duration': 90, 'range': 'region', 'type_id': 34, 'location_id': 60005599, 'volume_total': 2000000, 'order_id': 4623824223, 'is_buy_order': False}]}, 'schema': {'title': 'get_markets_region_id_orders_ok', 'type': 'array', 'description': '200 ok array', 'items': {'title': 'get_markets_region_id_orders_200_ok', 'type': 'object', 'description': '200 ok object', 'required': ['order_id', 'type_id', 'location_id', 'volume_total', 'volume_remain', 'min_volume', 'price', 'is_buy_order', 'duration', 'issued', 'range'], 'properties': {'volume_remain': {'type': 'integer', 'format': 'int32', 'description': 'volume_remain integer', 'title': 'get_markets_region_id_orders_volume_remain'}, 'issued': {'type': 'string', 'format': 'date-time', 'description': 'issued string', 'title': 'get_markets_region_id_orders_issued'}, 'min_volume': {'type': 'integer', 'format': 'int32', 'description': 'min_volume integer', 'title': 'get_markets_region_id_orders_min_volume'}, 'price': {'type': 'number', 'format': 'float', 'description': 'price number', 'title': 'get_markets_region_id_orders_price'}, 'duration': {'type': 'integer', 'format': 'int32', 'description': 'duration integer', 'title': 'get_markets_region_id_orders_duration'}, 'range': {'title': 'get_markets_region_id_orders_range', 'type': 'string', 'description': 'range string', 'enum': ['station', 'region', 'solarsystem', '1', '2', '3', '4', '5', '10', '20', '30', '40']}, 'type_id': {'type': 'integer', 'format': 'int32', 'description': 'type_id integer', 'title': 'get_markets_region_id_orders_type_id'}, 'location_id': {'type': 'integer', 'format': 'int64', 'description': 'location_id integer', 'title': 'get_markets_region_id_orders_location_id'}, 'volume_total': {'type': 'integer', 'format': 'int32', 'description': 'volume_total integer', 'title': 'get_markets_region_id_orders_volume_total'}, 'order_id': {'type': 'integer', 'format': 'int64', 'description': 'order_id integer', 'title': 'get_markets_region_id_orders_order_id'}, 'is_buy_order': {'type': 'boolean', 'description': 'is_buy_order boolean', 'title': 'get_markets_region_id_orders_is_buy_order'}}}}}, '500': {'description': 'Internal server error', 'examples': {'application/json': {'error': "uncaught exception: IOError('out of memory')"}}, 'schema': {'title': 'get_markets_region_id_orders_internal_server_error', 'type': 'object', 'description': 'Internal server error', 'properties': {'error': {'type': 'string', 'description': 'Internal server error message', 'title': 'get_markets_region_id_orders_500_internal_server_error'}}}}, '422': {'description': 'Not found', 'examples': {'application/json': {'error': 'Unprocessable entity message'}}, 'schema': {'title': 'get_markets_region_id_orders_unprocessable_entity', 'type': 'object', 'description': 'Unprocessable entity', 'properties': {'error': {'type': 'string', 'description': 'Unprocessable entity message', 'title': 'get_markets_region_id_orders_422_unprocessable_entity'}}}}}
-    parameter = [{'name': 'datasource', 'default': 'tranquility', 'enum': ['tranquility', 'singularity'], 'type': 'string', 'in': 'query', 'description': 'The server name you would like data from'}, {'name': 'order_type', 'default': 'all', 'enum': ['buy', 'sell', 'all'], 'type': 'string', 'in': 'query', 'required': True, 'description': 'Filter buy/sell orders, return all orders by default. If you query without type_id, we always return both buy and sell orders.\n'}, {'name': 'page', 'format': 'int32', 'default': 1, 'type': 'integer', 'in': 'query', 'required': False, 'description': 'Which page to query, only used for querying without type_id. Starting at 1\n'}, {'name': 'region_id', 'format': 'int32', 'description': 'Return orders in this region', 'type': 'integer', 'in': 'path', 'required': True}, {'name': 'type_id', 'format': 'int32', 'description': 'Return orders only for this type', 'type': 'integer', 'in': 'query', 'required': False}, {'name': 'user_agent', 'type': 'string', 'in': 'query', 'description': 'Client identifier, takes precedence over headers'}, {'name': 'X-User-Agent', 'type': 'string', 'in': 'header', 'description': 'Client identifier, takes precedence over User-Agent'}]
-    def get(self, datasource= "tranquility",order_type, page= ,region_id, type_id= ,**kwargs
-    ):
-        """
-                Return a list of orders in a region
-        
-        ---
-        
-        Alternate route: `/v1/markets/{region_id}/orders/`
-        
-        Alternate route: `/legacy/markets/{region_id}/orders/`
-        
-        Alternate route: `/dev/markets/{region_id}/orders/`
-        
-        
-        ---
-        
-        This route is cached for up to 300 seconds
-
-        :type datasource: str
-        :param datasource: The server name you would like data from
-
-        :type order_type: str
-        :param order_type: Filter buy/sell orders, return all orders by default. If you query without type_id, we always return both buy and sell orders.
-
-
-        :type page: int
-        :param page: Which page to query, only used for querying without type_id. Starting at 1
-
-
-        :type region_id: int
-        :param region_id: Return orders in this region
-
-        :type type_id: int
-        :param type_id: Return orders only for this type
-
-        :type user_agent: str
-        :param user_agent: Client identifier, takes precedence over headers
-
-        :type x_user_agent: str
-        :param x_user_agent: Client identifier, takes precedence over User-Agent
-
-        """
-        kwargs_dict ={"datasource" : datasource, "order_type" : order_type, "page" : page, "region_id" : region_id, "type_id" : type_id, "user_agent" : user_agent, "X-User-Agent" : x_user_agent, }
+        :param kwargs: user_agent, X-User-Agent
+    """
+        kwargs_dict ={
+"datasource" : datasource, 
+        }
         kwargs_dict.update(kwargs)
         return EsiRequestObject(self.base_url, self.get_responses) \
             .get(**kwargs_dict)
@@ -149,10 +81,9 @@ class MarketsDetailOrders(object):
 class MarketsDetailHistory(object):
     base_url = "https://esi.tech.ccp.is/latest/markets/{region_id}/history/"
 
-    get_responses = {'200': {'headers': {'Cache-Control': {'type': 'string', 'description': 'The caching mechanism used'}, 'Expires': {'type': 'string', 'description': 'RFC7231 formatted datetime string'}, 'Last-Modified': {'type': 'string', 'description': 'RFC7231 formatted datetime string'}}, 'description': 'A list of historical market statistics', 'examples': {'application/json': [{'date': '2015-05-01', 'volume': 16276782035, 'order_count': 2267, 'lowest': 5.11, 'average': 5.25, 'highest': 5.27}]}, 'schema': {'title': 'get_markets_region_id_history_ok', 'type': 'array', 'description': '200 ok array', 'items': {'title': 'get_markets_region_id_history_200_ok', 'type': 'object', 'description': '200 ok object', 'required': ['date', 'order_count', 'volume', 'highest', 'average', 'lowest'], 'properties': {'date': {'type': 'string', 'format': 'date', 'description': 'The date of this historical statistic entry', 'title': 'get_markets_region_id_history_date'}, 'volume': {'type': 'integer', 'format': 'int64', 'description': 'Total', 'title': 'get_markets_region_id_history_volume'}, 'order_count': {'type': 'integer', 'format': 'int64', 'description': 'Total number of orders happened that day', 'title': 'get_markets_region_id_history_order_count'}, 'lowest': {'type': 'number', 'format': 'float', 'description': 'lowest number', 'title': 'get_markets_region_id_history_lowest'}, 'average': {'type': 'number', 'format': 'float', 'description': 'average number', 'title': 'get_markets_region_id_history_average'}, 'highest': {'type': 'number', 'format': 'float', 'description': 'highest number', 'title': 'get_markets_region_id_history_highest'}}}}}, '500': {'description': 'Internal server error', 'examples': {'application/json': {'error': "uncaught exception: IOError('out of memory')"}}, 'schema': {'title': 'get_markets_region_id_history_internal_server_error', 'type': 'object', 'description': 'Internal server error', 'properties': {'error': {'type': 'string', 'description': 'Internal server error message', 'title': 'get_markets_region_id_history_500_internal_server_error'}}}}, '422': {'description': 'Not found', 'examples': {'application/json': {'error': 'Unprocessable entity message'}}, 'schema': {'title': 'get_markets_region_id_history_unprocessable_entity', 'type': 'object', 'description': 'Unprocessable entity', 'properties': {'error': {'type': 'string', 'description': 'Unprocessable entity message', 'title': 'get_markets_region_id_history_422_unprocessable_entity'}}}}}
-    parameter = [{'name': 'datasource', 'default': 'tranquility', 'enum': ['tranquility', 'singularity'], 'type': 'string', 'in': 'query', 'description': 'The server name you would like data from'}, {'name': 'region_id', 'format': 'int32', 'description': 'Return statistics in this region', 'type': 'integer', 'in': 'path', 'required': True}, {'name': 'type_id', 'format': 'int32', 'description': 'Return statistics for this type', 'type': 'integer', 'in': 'query', 'required': True}, {'name': 'user_agent', 'type': 'string', 'in': 'query', 'description': 'Client identifier, takes precedence over headers'}, {'name': 'X-User-Agent', 'type': 'string', 'in': 'header', 'description': 'Client identifier, takes precedence over User-Agent'}]
-    def get(self, datasource= "tranquility",region_id, type_id, **kwargs
-    ):
+    get_responses = {'422': {'examples': {'application/json': {'error': 'Unprocessable entity message'}}, 'description': 'Not found', 'schema': {'description': 'Unprocessable entity', 'title': 'get_markets_region_id_history_unprocessable_entity', 'type': 'object', 'properties': {'error': {'description': 'Unprocessable entity message', 'type': 'string', 'title': 'get_markets_region_id_history_422_unprocessable_entity'}}}}, '200': {'examples': {'application/json': [{'volume': 16276782035, 'date': '2015-05-01', 'lowest': 5.11, 'order_count': 2267, 'highest': 5.27, 'average': 5.25}]}, 'description': 'A list of historical market statistics', 'headers': {'Last-Modified': {'description': 'RFC7231 formatted datetime string', 'type': 'string'}, 'Cache-Control': {'description': 'The caching mechanism used', 'type': 'string'}, 'Expires': {'description': 'RFC7231 formatted datetime string', 'type': 'string'}}, 'schema': {'description': '200 ok array', 'items': {'required': ['date', 'order_count', 'volume', 'highest', 'average', 'lowest'], 'description': '200 ok object', 'title': 'get_markets_region_id_history_200_ok', 'type': 'object', 'properties': {'volume': {'description': 'Total', 'format': 'int64', 'type': 'integer', 'title': 'get_markets_region_id_history_volume'}, 'date': {'description': 'The date of this historical statistic entry', 'format': 'date', 'type': 'string', 'title': 'get_markets_region_id_history_date'}, 'lowest': {'description': 'lowest number', 'format': 'float', 'type': 'number', 'title': 'get_markets_region_id_history_lowest'}, 'order_count': {'description': 'Total number of orders happened that day', 'format': 'int64', 'type': 'integer', 'title': 'get_markets_region_id_history_order_count'}, 'highest': {'description': 'highest number', 'format': 'float', 'type': 'number', 'title': 'get_markets_region_id_history_highest'}, 'average': {'description': 'average number', 'format': 'float', 'type': 'number', 'title': 'get_markets_region_id_history_average'}}}, 'type': 'array', 'title': 'get_markets_region_id_history_ok'}}, '500': {'examples': {'application/json': {'error': "uncaught exception: IOError('out of memory')"}}, 'description': 'Internal server error', 'schema': {'description': 'Internal server error', 'title': 'get_markets_region_id_history_internal_server_error', 'type': 'object', 'properties': {'error': {'description': 'Internal server error message', 'type': 'string', 'title': 'get_markets_region_id_history_500_internal_server_error'}}}}}
+
+    def get(self, region_id, type_id, datasource="tranquility",**kwargs):
         """
                 Return a list of historical market statistics for the specified type in a region
         
@@ -169,23 +100,56 @@ class MarketsDetailHistory(object):
         
         This route is cached for up to 3600 seconds
 
-        :type datasource: str
-        :param datasource: The server name you would like data from
-
-        :type region_id: int
-        :param region_id: Return statistics in this region
-
-        :type type_id: int
+:type region_id: int
+        :param region_id: Return statistics in this region:type type_id: int
         :param type_id: Return statistics for this type
+:type datasource: str
+        :param datasource: The server name you would like data from
+        :param kwargs: user_agent, X-User-Agent
+    """
+        kwargs_dict ={
+"region_id" : region_id, "type_id" : type_id, "datasource" : datasource, 
+        }
+        kwargs_dict.update(kwargs)
+        return EsiRequestObject(self.base_url, self.get_responses) \
+            .get(**kwargs_dict)
 
-        :type user_agent: str
-        :param user_agent: Client identifier, takes precedence over headers
 
-        :type x_user_agent: str
-        :param x_user_agent: Client identifier, takes precedence over User-Agent
+class MarketsDetailOrders(object):
+    base_url = "https://esi.tech.ccp.is/latest/markets/{region_id}/orders/"
 
+    get_responses = {'422': {'examples': {'application/json': {'error': 'Unprocessable entity message'}}, 'description': 'Not found', 'schema': {'description': 'Unprocessable entity', 'title': 'get_markets_region_id_orders_unprocessable_entity', 'type': 'object', 'properties': {'error': {'description': 'Unprocessable entity message', 'type': 'string', 'title': 'get_markets_region_id_orders_422_unprocessable_entity'}}}}, '200': {'examples': {'application/json': [{'duration': 90, 'min_volume': 1, 'price': 9.9, 'type_id': 34, 'volume_remain': 1296000, 'order_id': 4623824223, 'volume_total': 2000000, 'range': 'region', 'location_id': 60005599, 'issued': '2016-09-03T05:12:25Z', 'is_buy_order': False}]}, 'description': 'A list of orders', 'headers': {'Last-Modified': {'description': 'RFC7231 formatted datetime string', 'type': 'string'}, 'Cache-Control': {'description': 'The caching mechanism used', 'type': 'string'}, 'Expires': {'description': 'RFC7231 formatted datetime string', 'type': 'string'}}, 'schema': {'description': '200 ok array', 'items': {'required': ['order_id', 'type_id', 'location_id', 'volume_total', 'volume_remain', 'min_volume', 'price', 'is_buy_order', 'duration', 'issued', 'range'], 'description': '200 ok object', 'title': 'get_markets_region_id_orders_200_ok', 'type': 'object', 'properties': {'duration': {'description': 'duration integer', 'format': 'int32', 'type': 'integer', 'title': 'get_markets_region_id_orders_duration'}, 'min_volume': {'description': 'min_volume integer', 'format': 'int32', 'type': 'integer', 'title': 'get_markets_region_id_orders_min_volume'}, 'price': {'description': 'price number', 'format': 'float', 'type': 'number', 'title': 'get_markets_region_id_orders_price'}, 'type_id': {'description': 'type_id integer', 'format': 'int32', 'type': 'integer', 'title': 'get_markets_region_id_orders_type_id'}, 'volume_remain': {'description': 'volume_remain integer', 'format': 'int32', 'type': 'integer', 'title': 'get_markets_region_id_orders_volume_remain'}, 'order_id': {'description': 'order_id integer', 'format': 'int64', 'type': 'integer', 'title': 'get_markets_region_id_orders_order_id'}, 'volume_total': {'description': 'volume_total integer', 'format': 'int32', 'type': 'integer', 'title': 'get_markets_region_id_orders_volume_total'}, 'range': {'enum': ['station', 'region', 'solarsystem', '1', '2', '3', '4', '5', '10', '20', '30', '40'], 'description': 'range string', 'type': 'string', 'title': 'get_markets_region_id_orders_range'}, 'location_id': {'description': 'location_id integer', 'format': 'int64', 'type': 'integer', 'title': 'get_markets_region_id_orders_location_id'}, 'issued': {'description': 'issued string', 'format': 'date-time', 'type': 'string', 'title': 'get_markets_region_id_orders_issued'}, 'is_buy_order': {'description': 'is_buy_order boolean', 'type': 'boolean', 'title': 'get_markets_region_id_orders_is_buy_order'}}}, 'type': 'array', 'title': 'get_markets_region_id_orders_ok'}}, '500': {'examples': {'application/json': {'error': "uncaught exception: IOError('out of memory')"}}, 'description': 'Internal server error', 'schema': {'description': 'Internal server error', 'title': 'get_markets_region_id_orders_internal_server_error', 'type': 'object', 'properties': {'error': {'description': 'Internal server error message', 'type': 'string', 'title': 'get_markets_region_id_orders_500_internal_server_error'}}}}}
+
+    def get(self, region_id, datasource="tranquility",order_type="all",page="1",**kwargs):
         """
-        kwargs_dict ={"datasource" : datasource, "region_id" : region_id, "type_id" : type_id, "user_agent" : user_agent, "X-User-Agent" : x_user_agent, }
+                Return a list of orders in a region
+        
+        ---
+        
+        Alternate route: `/v1/markets/{region_id}/orders/`
+        
+        Alternate route: `/legacy/markets/{region_id}/orders/`
+        
+        Alternate route: `/dev/markets/{region_id}/orders/`
+        
+        
+        ---
+        
+        This route is cached for up to 300 seconds
+
+:type region_id: int
+        :param region_id: Return orders in this region
+:type datasource: str
+        :param datasource: The server name you would like data from:type order_type: str
+        :param order_type: Filter buy/sell orders, return all orders by default. If you query without type_id, we always return both buy and sell orders.
+:type page: int
+        :param page: Which page to query, only used for querying without type_id. Starting at 1
+
+        :param kwargs: type_id, user_agent, X-User-Agent
+    """
+        kwargs_dict ={
+"region_id" : region_id, "datasource" : datasource, "order_type" : order_type, "page" : page, 
+        }
         kwargs_dict.update(kwargs)
         return EsiRequestObject(self.base_url, self.get_responses) \
             .get(**kwargs_dict)

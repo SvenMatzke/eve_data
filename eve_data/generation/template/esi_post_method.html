@@ -1,24 +1,18 @@
-    {%- set parameter = post.get("parameters",[]) %}
+{% import 'esi_macros.html' as macros -%}
+    {%- set required_parameter = post.get("parameters",[]) | getRequiredParams -%}
+    {%- set optional_parameter = post.get("parameters",[]) | getOptionalParams -%}
+    {%- set kwargs = post.get("parameters",[]) | getKwargs %}
     post_responses = {{ post.get("responses",{})}}
 
-    def post(self,{{ " " }}
-    {%- for params in parameter -%}
-        {%- if params.required is defined -%}
-            {{ params.get('name') | convertPythonParam + ", " }}
-        {%- else -%}
-            {{ params.get('name') | convertPythonParam }}="{{ params.get('default')}}",
-        {%- endif -%}
-    {%- endfor -%}
-    ):
-        """
-        {{ post.get('description','') | indent(8, True) }}
-        {% for params in parameter %}
-        :type {{ params.get("name") | convertPythonParam }}: {{ params.get('type') | convertPythonType }}
-        :param {{ params.get("name") | convertPythonParam }}: {{ params.get('description') }}
-        {% endfor %}
-        """
+    def post{{ macros.create_params(required_parameter, optional_parameter, kwargs) }}:
+        {{ macros.create_description(post.get('description',''), required_parameter, optional_parameter, kwargs) }}
+        kwargs_dict ={
+                {% for param in required_parameter | map(attribute='name')  -%}
+                    "{{ param }}" : {{ param | convertPythonParam  +", " }}
+                {%- endfor %}{% for param in optional_parameter | map(attribute='name')  -%}
+                    "{{ param }}" : {{ param | convertPythonParam  +", " }}
+                {%- endfor %}
+        }
+        kwargs_dict.update(kwargs)
         return EsiRequestObject(self.base_url, self.post_responses) \
-            .post(**{
-                {%- for param in parameter | map(attribute='name')  -%}
-                    "{{ param }}":{{ param | convertPythonParam + ", " }}
-                {%- endfor -%}})
+            .post(**kwargs_dict)

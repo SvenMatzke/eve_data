@@ -9,10 +9,9 @@ from .base import EsiRequestObject
 class InsurancePrices(object):
     base_url = "https://esi.tech.ccp.is/latest/insurance/prices/"
 
-    get_responses = {'200': {'headers': {'Last-Modified': {'type': 'string', 'description': 'RFC7231 formatted datetime string'}, 'Cache-Control': {'type': 'string', 'description': 'The caching mechanism used'}, 'Expires': {'type': 'string', 'description': 'RFC7231 formatted datetime string'}, 'Content-Language': {'type': 'string', 'description': 'The language used in the response', 'enum': ['de', 'en-us', 'fr', 'ja', 'ru', 'zh']}}, 'description': 'A list of insurance levels for all ship types', 'examples': {'application/json': [{'levels': [{'name': 'Basic', 'cost': 10.0, 'payout': 20.0}], 'type_id': 1}]}, 'schema': {'title': 'get_insurance_prices_ok', 'type': 'array', 'description': '200 ok array', 'items': {'title': 'get_insurance_prices_200_ok', 'type': 'object', 'description': '200 ok object', 'required': ['type_id', 'levels'], 'properties': {'levels': {'title': 'get_insurance_prices_levels', 'type': 'array', 'description': 'A list of a available insurance levels for this ship type', 'items': {'title': 'get_insurance_prices_level', 'type': 'object', 'description': 'level object', 'required': ['cost', 'payout', 'name'], 'properties': {'name': {'type': 'string', 'description': 'Localized insurance level', 'title': 'get_insurance_prices_name'}, 'cost': {'type': 'number', 'format': 'float', 'description': 'cost number', 'title': 'get_insurance_prices_cost'}, 'payout': {'type': 'number', 'format': 'float', 'description': 'payout number', 'title': 'get_insurance_prices_payout'}}}}, 'type_id': {'type': 'integer', 'format': 'int32', 'description': 'type_id integer', 'title': 'get_insurance_prices_type_id'}}}}}, '500': {'description': 'Internal server error', 'examples': {'application/json': {'error': "uncaught exception: IOError('out of memory')"}}, 'schema': {'title': 'get_insurance_prices_internal_server_error', 'type': 'object', 'description': 'Internal server error', 'properties': {'error': {'type': 'string', 'description': 'Internal server error message', 'title': 'get_insurance_prices_500_internal_server_error'}}}}}
-    parameter = [{'name': 'datasource', 'default': 'tranquility', 'enum': ['tranquility', 'singularity'], 'type': 'string', 'in': 'query', 'description': 'The server name you would like data from'}, {'name': 'language', 'default': 'en-us', 'enum': ['de', 'en-us', 'fr', 'ja', 'ru', 'zh'], 'type': 'string', 'in': 'query', 'description': 'Language to use in the response'}, {'name': 'user_agent', 'type': 'string', 'in': 'query', 'description': 'Client identifier, takes precedence over headers'}, {'name': 'X-User-Agent', 'type': 'string', 'in': 'header', 'description': 'Client identifier, takes precedence over User-Agent'}]
-    def get(self, datasource= "tranquility",language= "en-us",**kwargs
-    ):
+    get_responses = {'500': {'examples': {'application/json': {'error': "uncaught exception: IOError('out of memory')"}}, 'description': 'Internal server error', 'schema': {'description': 'Internal server error', 'title': 'get_insurance_prices_internal_server_error', 'type': 'object', 'properties': {'error': {'description': 'Internal server error message', 'type': 'string', 'title': 'get_insurance_prices_500_internal_server_error'}}}}, '200': {'examples': {'application/json': [{'type_id': 1, 'levels': [{'payout': 20.0, 'name': 'Basic', 'cost': 10.0}]}]}, 'description': 'A list of insurance levels for all ship types', 'headers': {'Last-Modified': {'description': 'RFC7231 formatted datetime string', 'type': 'string'}, 'Content-Language': {'enum': ['de', 'en-us', 'fr', 'ja', 'ru', 'zh'], 'description': 'The language used in the response', 'type': 'string'}, 'Cache-Control': {'description': 'The caching mechanism used', 'type': 'string'}, 'Expires': {'description': 'RFC7231 formatted datetime string', 'type': 'string'}}, 'schema': {'description': '200 ok array', 'items': {'required': ['type_id', 'levels'], 'description': '200 ok object', 'title': 'get_insurance_prices_200_ok', 'type': 'object', 'properties': {'type_id': {'description': 'type_id integer', 'format': 'int32', 'type': 'integer', 'title': 'get_insurance_prices_type_id'}, 'levels': {'description': 'A list of a available insurance levels for this ship type', 'items': {'required': ['cost', 'payout', 'name'], 'description': 'level object', 'title': 'get_insurance_prices_level', 'type': 'object', 'properties': {'payout': {'description': 'payout number', 'format': 'float', 'type': 'number', 'title': 'get_insurance_prices_payout'}, 'name': {'description': 'Localized insurance level', 'type': 'string', 'title': 'get_insurance_prices_name'}, 'cost': {'description': 'cost number', 'format': 'float', 'type': 'number', 'title': 'get_insurance_prices_cost'}}}, 'type': 'array', 'title': 'get_insurance_prices_levels'}}}, 'type': 'array', 'title': 'get_insurance_prices_ok'}}}
+
+    def get(self, datasource="tranquility",language="en-us",**kwargs):
         """
                 Return available insurance levels for all ship types
         
@@ -29,20 +28,15 @@ class InsurancePrices(object):
         
         This route is cached for up to 3600 seconds
 
-        :type datasource: str
-        :param datasource: The server name you would like data from
 
-        :type language: str
+:type datasource: str
+        :param datasource: The server name you would like data from:type language: str
         :param language: Language to use in the response
-
-        :type user_agent: str
-        :param user_agent: Client identifier, takes precedence over headers
-
-        :type x_user_agent: str
-        :param x_user_agent: Client identifier, takes precedence over User-Agent
-
-        """
-        kwargs_dict ={"datasource" : datasource, "language" : language, "user_agent" : user_agent, "X-User-Agent" : x_user_agent, }
+        :param kwargs: user_agent, X-User-Agent
+    """
+        kwargs_dict ={
+"datasource" : datasource, "language" : language, 
+        }
         kwargs_dict.update(kwargs)
         return EsiRequestObject(self.base_url, self.get_responses) \
             .get(**kwargs_dict)

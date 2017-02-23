@@ -1,0 +1,29 @@
+{% macro create_params(required_parameter, optional_parameter=[], kwargs=[]) -%}
+    (self,{{ " " }}
+    {%- for params in required_parameter -%}
+        {{ params.get('name') | convertPythonParam + ", " }}
+    {%- endfor -%}
+    {%- for params in optional_parameter -%}
+        {%- if params.default is defined -%}
+            {{ params.get('name') | convertPythonParam }}="{{ params.get('default', '')}}",
+        {%- elif  params.minimum is defined -%}
+            {{ params.get('name') | convertPythonParam }}={{ params.get('minimum', '')}},
+        {%- endif -%}
+    {%- endfor -%} **kwargs)
+{%- endmacro %}
+
+{% macro create_description(description, required_parameter, optional_parameter=[], kwargs=[]) -%}
+    """
+        {{ description | indent(8, True) }}
+
+        {% for params in required_parameter -%}
+        :type {{ params.get("name") | convertPythonParam }}: {{ params.get('type') | convertPythonType }}
+        :param {{ params.get("name") | convertPythonParam }}: {{ params.get('description') }}
+        {%- endfor %}
+        {% for params in optional_parameter -%}
+        :type {{ params.get("name") | convertPythonParam }}: {{ params.get('type') | convertPythonType }}
+        :param {{ params.get("name") | convertPythonParam }}: {{ params.get('description') }}
+        {%- endfor %}
+        :param kwargs: {{ kwargs | join(', ')}}
+    """
+{%- endmacro %}

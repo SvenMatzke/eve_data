@@ -1,29 +1,17 @@
-    {%- set required_parameter = get.get("parameters",[]) -%}
-    {%- set optional_parameter = get.get("parameters",[]) -%}
-    {%- set kwargs = get.get("parameters",[]) -%}
+{% import 'esi_macros.html' as macros -%}
+    {%- set required_parameter = get.get("parameters",[]) | getRequiredParams -%}
+    {%- set optional_parameter = get.get("parameters",[]) | getOptionalParams -%}
+    {%- set kwargs = get.get("parameters",[]) | getKwargs %}
     get_responses = {{ get.get("responses",{}) }}
-    parameter = {{ parameter }}
-    def get(self,{{ " " }}
-    {%- for params in parameter -%}
-        {%- if params.required is defined and params.required is equalto True -%}
-            {{ params.get('name') | convertPythonParam + ", " }}
-        {%- elif  params.required is defined and params.required is equalto False -%}
-            {{ params.get('name') | convertPythonParam }}= {{ params.get('minimum', '')}},
-        {%- elif params.default is defined -%}
-            {{ params.get('name') | convertPythonParam }}= "{{ params.get('default', '')}}",
-        {%- endif -%}
-    {%- endfor -%}**kwargs):
-        """
-        {{ get.get('description','') | indent(8, True) }}
-        {% for params in parameter %}
-        :type {{ params.get("name") | convertPythonParam }}: {{ params.get('type') | convertPythonType }}
-        :param {{ params.get("name") | convertPythonParam }}: {{ params.get('description') }}
-        {% endfor %}
-        """
+
+    def get{{ macros.create_params(required_parameter, optional_parameter, kwargs) }}:
+        {{ macros.create_description(get.get('description',''), required_parameter, optional_parameter, kwargs) }}
         kwargs_dict ={
-                {%- for param in parameter | map(attribute='name')  -%}
+                {% for param in required_parameter | map(attribute='name')  -%}
                     "{{ param }}" : {{ param | convertPythonParam  +", " }}
-                {%- endfor -%}
+                {%- endfor %}{% for param in optional_parameter | map(attribute='name')  -%}
+                    "{{ param }}" : {{ param | convertPythonParam  +", " }}
+                {%- endfor %}
         }
         kwargs_dict.update(kwargs)
         return EsiRequestObject(self.base_url, self.get_responses) \

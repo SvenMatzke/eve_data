@@ -1,25 +1,18 @@
-    {%- set parameter = delete.get("parameters",[]) %}
+{% import 'esi_macros.html' as macros -%}
+    {%- set required_parameter = delete.get("parameters",[]) | getRequiredParams -%}
+    {%- set optional_parameter = delete.get("parameters",[]) | getOptionalParams -%}
+    {%- set kwargs = delete.get("parameters",[]) | getKwargs %}
     delete_responses = {{ delete.get("responses",{}) }}
 
-    def delete(self,{{ " " }}
-    {%- for params in parameter  -%}
-        {%- if params.required is defined -%}
-            {{ params.get('name') | convertPythonParam + ", " }}
-        {%- else -%}
-            {{ params.get('name') | convertPythonParam }}="{{ params.get('default')}}",
-        {%- endif -%}
-    {%- endfor -%}
-    ):
-        """
-        {{ delete.get('description','') | indent(8, True) }}
-        {% for params in parameter %}
-        :type {{ params.get("name") | convertPythonParam }}: {{ params.get('type') | convertPythonType }}
-        :param {{ params.get("name") | convertPythonParam }}: {{ params.get('description') }}
-        {% endfor %}
-        """
+    def delete{{ macros.create_params(required_parameter, optional_parameter, kwargs) }}:
+        {{ macros.create_description(delete.get('description',''), required_parameter, optional_parameter, kwargs) }}
+        kwargs_dict ={
+                {% for param in required_parameter | map(attribute='name')  -%}
+                    "{{ param }}" : {{ param | convertPythonParam  +", " }}
+                {%- endfor %}{% for param in optional_parameter | map(attribute='name')  -%}
+                    "{{ param }}" : {{ param | convertPythonParam  +", " }}
+                {%- endfor %}
+        }
+        kwargs_dict.update(kwargs)
         return EsiRequestObject(self.base_url, self.delete_responses) \
-            .delete(**{
-                {%- for param in parameter | map(attribute='name')  -%}
-                    "{{ param }}":{{ param | convertPythonParam+", " }}
-                {%- endfor -%}
-                })
+            .delete(**kwargs_dict)
