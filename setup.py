@@ -5,12 +5,12 @@ with open(os.path.join(os.path.dirname(__file__), 'README.md')) as readme:
     README = readme.read()
 
 setup(
-    name='eve_data',
+    name='django_eve_data',
     version='0.1.0',
     packages=find_packages(),
     include_package_data=True,
     long_description=README,
-    url='https://github.com/SvenMatzke/eve_data',
+    url='https://github.com/SvenMatzke/django_eve_data',
     license='MIT',
     author='Sven Matzke',
     author_email='',
@@ -19,7 +19,7 @@ setup(
         'Environment :: Web Environment',
         'Framework :: Django',
         'Intended Audience :: Developers',
-        'License :: OSI Approved :: MIT License',  # example license
+        'License :: OSI Approved :: MIT License',
         'Operating System :: OS Independent',
         'Programming Language :: Python',
         'Programming Language :: Python :: 3',

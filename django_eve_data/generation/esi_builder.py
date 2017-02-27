@@ -11,8 +11,6 @@ from urllib.parse import urlsplit
 
 from jinja2 import FileSystemLoader
 
-# TODO types in params
-
 
 def get_optional_parameter(value):
     return list(filter(lambda x: 'default' in x.keys() or 'minimum' in x.keys(), value))
@@ -55,8 +53,6 @@ def convert_python_type(value):
         return "list"
     return value
 
-# TODO only params with default or required should be listet
-# further i need to order those
 
 
 class SwaggerAPIBuilder(object):
