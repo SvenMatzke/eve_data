@@ -32,6 +32,16 @@ def get_kwargs(value):
     return [all_kwarg.get('name', 'notnamed') for all_kwarg in all_kwargs]
 
 
+def get_param_default_template(value):
+    param_type = value.get('type', 'string')
+    default = value.get('default', value.get('minimum', ''))
+
+    if param_type == "integer":
+        return default
+    else:
+        return '"'+str(default)+'"'
+
+
 def convert_string_to_python_variable(value):
     return re.sub("-| % | & ", "_", value).lower()
 
@@ -73,6 +83,7 @@ class SwaggerAPIBuilder(object):
         jinja_enviroment.filters["convertPythonParam"] = convert_string_to_python_variable
         jinja_enviroment.filters["getRequiredParams"] = get_required_param
         jinja_enviroment.filters["getOptionalParams"] = get_optional_parameter
+        jinja_enviroment.filters["getParamDefaultTemplate"] = get_param_default_template
         jinja_enviroment.filters["getKwargs"] = get_kwargs
 
         template_start = jinja_enviroment.get_template('esi_file_start.html')

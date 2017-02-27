@@ -4,10 +4,8 @@
         {{ params.get('name') | convertPythonParam + ", " }}
     {%- endfor -%}
     {%- for params in optional_parameter -%}
-        {%- if params.default is defined -%}
-            {{ params.get('name') | convertPythonParam }}="{{ params.get('default', '')}}",
-        {%- elif  params.minimum is defined -%}
-            {{ params.get('name') | convertPythonParam }}={{ params.get('minimum', '')}},
+        {%- if params.default is defined or params.minimum is defined -%}
+            {{ params.get('name') | convertPythonParam }}={{ params | getParamDefaultTemplate }},
         {%- endif -%}
     {%- endfor -%} **kwargs)
 {%- endmacro %}
@@ -19,11 +17,11 @@
         {% for params in required_parameter -%}
         :type {{ params.get("name") | convertPythonParam }}: {{ params.get('type') | convertPythonType }}
         :param {{ params.get("name") | convertPythonParam }}: {{ params.get('description') }}
-        {%- endfor %}
+        {% endfor -%}
         {% for params in optional_parameter -%}
         :type {{ params.get("name") | convertPythonParam }}: {{ params.get('type') | convertPythonType }}
         :param {{ params.get("name") | convertPythonParam }}: {{ params.get('description') }}
-        {%- endfor %}
+        {% endfor -%}
         :param kwargs: {{ kwargs | join(', ')}}
     """
 {%- endmacro %}
