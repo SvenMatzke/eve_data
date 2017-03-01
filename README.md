@@ -27,12 +27,12 @@ and have an easy to use api where only the data access of your account is the li
 
 2. django settings full settings for OAuth2 and optional django_rest_framework:
 
-
+```
     INSTALLED_APPS = [
         ...
         'oauth2_provider',
         'social_django',
-        'django_eve_data',
+        'eve_data',
         'rest_framework_social_oauth2', # Optional
         'rest_framework', # Optional
         ...
@@ -40,7 +40,7 @@ and have an easy to use api where only the data access of your account is the li
     
     MIDDLEWARE_CLASSES = [
         ...,
-        'django_eve_data.middleware.EveDataMiddleware'
+        'eve_data.middleware.EveDataMiddleware'
     ]
 
     TEMPLATES = [
@@ -82,7 +82,7 @@ and have an easy to use api where only the data access of your account is the li
     SOCIAL_AUTH_EVEONLINE_KEY = 'enter your key from eve online' 
     SOCIAL_AUTH_EVEONLINE_SECRET = 'enter your secret from eve online'
     SOCIAL_AUTH_CLEAN_USERNAMES = False
-    # Comment out or delete the rights you dont need
+     Comment out or delete the rights you dont need
     SOCIAL_AUTH_EVEONLINE_SCOPE = [
         'publicData',
         'remoteClientUI',
@@ -122,7 +122,13 @@ and have an easy to use api where only the data access of your account is the li
         ),
     }
     AUTH_USER_MODEL = 'django_eve_data.EveUser'
-    
+```
+
+For social Auth you need also to add
+```
+     url(r'', include('social_django.urls', namespace='social')),
+```     
+to your url paths, but best to look it up in the links below.
 
 # Migrate eve_data 
 If you want newer data then the package provides you can migrate new static_db_model 
@@ -139,18 +145,18 @@ if you have not already
 
 # Useage
 basic esi useage (Charakter and so on only work after middleware is executed or header is set manualy)
-
+```
     from django_eve_data.esi_api import alliances
     print(alliances.Alliances().get())
-    
+```    
 or comfort layer in future
-    
+```    
     from django_eve_data.comfort_layer import *
-    
+```    
 or for static data model
-
+```
     from django_eve_data.static_data_export.static_model import *
-    
+```    
 
 # Helpful Links if i missed smth in oAuth2 or restframework
 http://python-social-auth.readthedocs.io/en/latest/backends/eveonline.html
