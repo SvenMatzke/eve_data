@@ -159,7 +159,7 @@ or for static data model
 ```    
 
 # Helpful Links if i missed smth in oAuth2 or restframework
-http://python-social-auth.readthedocs.io/en/latest/backends/eveonline.html
+http://python-social-auth.readthedocs.io/en/latest/backends/eveonline.html <br>
 http://python-social-auth.readthedocs.io/en/latest/configuration/django.html
 
 #
