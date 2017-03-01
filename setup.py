@@ -6,11 +6,11 @@ with open(os.path.join(os.path.dirname(__file__), 'README.md')) as readme:
 
 setup(
     name='django_eve_data',
-    version='0.1.0',
+    version='0.1.1',
     packages=find_packages(),
     include_package_data=True,
     long_description=README,
-    url='https://github.com/SvenMatzke/django_eve_data',
+    url='https://github.com/SvenMatzke/eve_data',
     license='MIT',
     author='Sven Matzke',
     author_email='',

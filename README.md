@@ -140,6 +140,7 @@ and python esi_api yourself. But be aware its not testet dont write silly issues
 
 # Setting up your Social Auth also explained in the links below
 if you have not already
+- migrate (social user has its own model)
 - createsuperuser 
 - login to your adminmenue and add am application to Django OAuth Tool Kit
 
@@ -160,7 +161,8 @@ or for static data model
 
 # Helpful Links if i missed smth in oAuth2 or restframework
 http://python-social-auth.readthedocs.io/en/latest/backends/eveonline.html <br>
-http://python-social-auth.readthedocs.io/en/latest/configuration/django.html
+http://python-social-auth.readthedocs.io/en/latest/configuration/django.html <br>
+https://developers.eveonline.com/applications
 
 #
 If you want to help make an issue or better a pull request with a solution. 
