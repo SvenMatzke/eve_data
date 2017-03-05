@@ -3,9 +3,8 @@ This Files creates an additional manage.py command for Django
 https://docs.djangoproject.com/en/1.10/howto/custom-management-commands/
 """
 from django.core.management import BaseCommand
-import os
-from EveData.generation.esi_builder import SwaggerAPIBuilder
-from EveData.generation.static_data_builder import create_static_model
+from eve_data.generation.esi_builder import SwaggerAPIBuilder
+from eve_data.generation.static_data_builder import create_static_model
 
 
 class Command(BaseCommand):

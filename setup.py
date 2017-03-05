@@ -6,7 +6,7 @@ with open(os.path.join(os.path.dirname(__file__), 'README.md')) as readme:
 
 setup(
     name='django_eve_data',
-    version='0.1.1',
+    version='0.1.3',
     packages=find_packages(),
     include_package_data=True,
     long_description=README,
@@ -14,7 +14,7 @@ setup(
     license='MIT',
     author='Sven Matzke',
     author_email='',
-    description='Package for retrieving Data from EveOnline and make them easy to use.',
+    description='Package for retrieving Data via API or static from Eve Online.',
     classifiers=[
         'Environment :: Web Environment',
         'Framework :: Django',

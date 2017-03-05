@@ -32,7 +32,7 @@ and have an easy to use api where only the data access of your account is the li
         ...
         'oauth2_provider',
         'social_django',
-        'eve_data',
+        'django_eve_data',
         'rest_framework_social_oauth2', # Optional
         'rest_framework', # Optional
         ...
@@ -40,7 +40,7 @@ and have an easy to use api where only the data access of your account is the li
     
     MIDDLEWARE_CLASSES = [
         ...,
-        'eve_data.middleware.EveDataMiddleware'
+        'django_eve_data.middleware.EveDataMiddleware'
     ]
 
     TEMPLATES = [
