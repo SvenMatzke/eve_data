@@ -16,7 +16,7 @@ and have an easy to use api where only the data access of your account is the li
 # How to
 1. pip install django_eve_data or add package to your Enviroment <br>
     # Packages you will need:
-    - django
+    - django >= 1.10.*
     - social-auth-app-django
     - django_eve_data
 
@@ -124,9 +124,11 @@ and have an easy to use api where only the data access of your account is the li
     AUTH_USER_MODEL = 'django_eve_data.EveUser'
 ```
 
-For social Auth you need also to add
+For social Auth and Admin you need also to add
 ```
-     url(r'', include('social_django.urls', namespace='social')),
+    url(r'', include('social_django.urls', namespace='social')),
+    url(r'^admin/', admin.site.urls),
+    url(r'^auth/', include('rest_framework_social_oauth2.urls')),
 ```     
 to your url paths, but best to look it up in the links below.
 
